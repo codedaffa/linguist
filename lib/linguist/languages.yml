@@ -9674,3 +9674,12 @@ xBase:
   tm_scope: source.harbour
   ace_mode: text
   language_id: 421
+DapCode:
+  type: programming
+  color: "#38bdf8"
+  extensions:
+    - ".dap"
+  tm_scope: source.dap
+  ace_mode: text
+  codemirror_mode: clike
+  language_id: 1945
