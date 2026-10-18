@@ -375,6 +375,8 @@ vendor/grammars/d2-vscode:
 - markdown.d2.codeblock
 - source.d2
 - text.html.markdown.d2
+vendor/grammars/dapcode-grammar:
+- source.dap
 vendor/grammars/dart-syntax-highlight:
 - source.dart
 vendor/grammars/daslang-grammar:

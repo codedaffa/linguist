@@ -1665,3 +1665,6 @@
 [submodule "vendor/grammars/zephir-sublime"]
 	path = vendor/grammars/zephir-sublime
 	url = https://github.com/phalcon/zephir-sublime
+[submodule "vendor/grammars/dapcode-grammar"]
+	path = vendor/grammars/dapcode-grammar
+	url = https://github.com/codedaffa/dapcode-grammar
