@@ -1,0 +1,63 @@
+# ==============================================================================
+# MANAJEMEN DATA SANTRI & PENDIDIKAN PESANTREN (DQL SCRIPT)
+# ==============================================================================
+
+# Membuat tabel kamar asrama
+buat tabel jika_belum_ada asrama (
+    id seri pk,
+    nama_gedung teks bukan_null,
+    kapasitas bulat bukan_null,
+    terisi bulat bawaan 0
+);
+
+# Membuat tabel santri
+buat tabel jika_belum_ada santri (
+    nis teks pk,
+    nama teks bukan_null,
+    kota_asal teks bukan_null,
+    angkatan bulat bukan_null,
+    hafalan_juz bulat bawaan 0,
+    status_aktif teks bawaan 'aktif',
+    id_asrama bulat
+);
+
+# Input data asrama
+tambah ke asrama {nama_gedung: 'Ali bin Abi Thalib', kapasitas: 40, terisi: 35};
+tambah ke asrama {nama_gedung: 'Umar bin Khattab', kapasitas: 50, terisi: 48};
+tambah ke asrama {nama_gedung: 'Utsman bin Affan', kapasitas: 45, terisi: 30};
+
+# Input data santri
+tambah ke santri {nis: 'STR-2026-001', nama: 'Ahmad Faiz', kota_asal: 'Surabaya', angkatan: 2024, hafalan_juz: 15, status_aktif: 'aktif', id_asrama: 1};
+tambah ke santri {nis: 'STR-2026-002', nama: 'Bilal Al-Ghifari', kota_asal: 'Yogyakarta', angkatan: 2024, hafalan_juz: 28, status_aktif: 'aktif', id_asrama: 2};
+tambah ke santri {nis: 'STR-2026-003', nama: 'Fajar Shiddiq', kota_asal: 'Bandung', angkatan: 2025, hafalan_juz: 10, status_aktif: 'aktif', id_asrama: 1};
+tambah ke santri {nis: 'STR-2026-004', nama: 'Hamzah Hidayat', kota_asal: 'Semarang', angkatan: 2023, hafalan_juz: 30, status_aktif: 'aktif', id_asrama: 2};
+tambah ke santri {nis: 'STR-2026-005', nama: 'Zaidan Rasyid', kota_asal: 'Malang', angkatan: 2025, hafalan_juz: 6, status_aktif: 'alumni', id_asrama: 3};
+
+# Menampilkan santri dengan hafalan >= 15 juz yang aktif
+ambil pilih nis, nama, kota_asal, hafalan_juz dari santri
+di_mana hafalan_juz >= 15 dan status_aktif == 'aktif'
+urutkan hafalan_juz turun;
+
+# Statistik capaian tahfidz santri
+ambil pilih
+    jumlah(nis) sebagai total_santri,
+    rata_rata(hafalan_juz) sebagai rerata_hafalan,
+    max(hafalan_juz) sebagai hafalan_tertinggi,
+    min(hafalan_juz) sebagai hafalan_terendah
+dari santri
+di_mana status_aktif == 'aktif';
+
+# Relasi antara santri dan kamar asrama
+ambil pilih
+    santri.nama sebagai nama_santri,
+    santri.hafalan_juz sebagai capaian_juz,
+    asrama.nama_gedung sebagai nama_kamar
+dari santri
+gabung_kiri asrama pada santri.id_asrama == asrama.id
+di_mana santri.status_aktif == 'aktif'
+urutkan santri.hafalan_juz turun;
+
+# Pembaruan capaian santri
+perbarui santri
+atur hafalan_juz = 17
+di_mana nis == 'STR-2026-001';
